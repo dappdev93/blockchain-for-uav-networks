@@ -1,0 +1,28 @@
+{
+  "name": "blockchain-for-uav-networks",
+  "version": "1.0.0",
+  "description": "",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prettier": "prettier --write 'contracts/**/*.sol'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alfaisal7421/blockchain-for-uav-networks.git"
+  },
+  "author": "Faisal Albalwy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alfaisal7421/blockchain-for-uav-networks/issues"
+  },
+  "homepage": "https://github.com/alfaisal7421/blockchain-for-uav-networks#readme",
+  "devDependencies": {
+    "@openzeppelin/test-helpers": "^0.5.12",
+    "prettier": "^2.5.1",
+    "prettier-plugin-solidity": "^1.0.0-beta.19"
+  }
+}

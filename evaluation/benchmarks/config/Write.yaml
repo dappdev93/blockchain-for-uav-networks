@@ -1,0 +1,50 @@
+test:
+  name: Write performance
+  description: This is a benchmark for caliper, to test the system smart contract write performance
+  workers:
+    type: local
+    number: 1
+  rounds:
+    - label: 5TSP
+      txNumber: 100
+      rateControl: { type: fixed-rate, opts: { tps: 5 } }
+      callback: benchmarks/callbacks/Write.js
+    - label: 10TSP
+      txNumber: 100
+      rateControl: { type: fixed-rate, opts: { tps: 10 } }
+      callback: benchmarks/callbacks/Write.js
+    - label: 15TSP
+      txNumber: 100
+      rateControl: { type: fixed-rate, opts: { tps: 15 } }
+      callback: benchmarks/callbacks/Write.js
+    - label: 20TSP
+      txNumber: 100
+      rateControl: { type: fixed-rate, opts: { tps: 20 } }
+      callback: benchmarks/callbacks/Write.js
+    - label: 25TSP
+      txNumber: 100
+      rateControl: { type: fixed-rate, opts: { tps: 25 } }
+      callback: benchmarks/callbacks/Write.js
+    - label: 30TSP
+      txNumber: 100
+      rateControl: { type: fixed-rate, opts: { tps: 30 } }
+      callback: benchmarks/callbacks/Write.js
+    - label: 35TSP
+      txNumber: 100
+      rateControl: { type: fixed-rate, opts: { tps: 35 } }
+      callback: benchmarks/callbacks/Write.js
+    - label: 40TSP
+      txNumber: 100
+      rateControl: { type: fixed-rate, opts: { tps: 40 } }
+      callback: benchmarks/callbacks/Write.js
+    - label: 45TSP
+      txNumber: 100
+      rateControl: { type: fixed-rate, opts: { tps: 45 } }
+      callback: benchmarks/callbacks/Write.js
+    - label: 50TSP
+      txNumber: 100
+      rateControl: { type: fixed-rate, opts: { tps: 50 } }
+      callback: benchmarks/callbacks/Write.js
+monitor:
+  type:
+    - none

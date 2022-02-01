@@ -1,0 +1,483 @@
+<!doctype html>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+<script>
+    function plotChart(divId, chartData) {
+        // Convert from stringified html, to valid JSON
+        const chartDetails = JSON.parse(chartData.replace(/&quot;/g,'"'));
+        new Chart(document.getElementById(divId), {
+            type: chartDetails.type,
+            data: {
+                labels: chartDetails.labels,
+                datasets: chartDetails.datasets
+            },
+            options: {
+                legend: { display: chartDetails.legend },
+                title: {
+                    display: true,
+                    text: chartDetails.title
+                }
+            }
+        });
+    }
+</script>
+<html>
+<head>
+    <title>Hyperledger Caliper Report</title>
+    <meta charset="UTF-8"/>
+    <style type="text/css">
+        .left-column {
+            position: fixed;
+            width:20%;
+        }
+        .left-column ul {
+            display: block;
+            padding: 0;
+            list-style: none;
+            border-bottom: 1px solid #d9d9d9;
+            font-size: 14px;
+        }
+        .left-column h2{
+            font-size: 24px;
+            font-weight: 400;
+            margin-block-end: 0.5em;
+        }
+        .left-column h3{
+            font-size: 18px;
+            font-weight: 400;
+            margin-block-end: 0.5em;
+        }
+        .left-column li{
+            margin-left: 10px;
+            margin-bottom: 5px;
+            color: #5e6b73;
+        }
+        .right-column {
+            margin-left: 22%;
+            width:60%;
+        }
+        .right-column table {
+            font-size:11px;
+            color:#333333;
+            border-width: 1px;
+            border-color: #666666;
+            border-collapse: collapse;
+            margin-bottom: 10px;
+        }
+        .right-column h2{
+            font-weight: 400;
+        }
+        .right-column h3{
+            font-weight: 400;
+        }
+        .right-column h4 {
+            font-weight: 400;
+            margin-block-end: 0;
+        }
+        .right-column th {
+            border-width: 1px;
+            font-size: small;
+            padding: 8px;
+            border-style: solid;
+            border-color: #666666;
+            background-color: #f2f2f2;
+        }
+        .right-column td {
+            border-width: 1px;
+            font-size: small;
+            padding: 8px;
+            border-style: solid;
+            border-color: #666666;
+            background-color: #ffffff;
+            font-weight: 400;
+        }
+        .tag {
+            margin-bottom: 10px;
+            padding: 5px 10px;
+        }
+        pre {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            background-color: #f2f2f2;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            -khtml-border-radius: 5px;
+            overflow:auto;
+            max-height:300px;
+            font-size:12px;
+        }
+        .charting {
+            display:flex;
+            flex-direction:row;
+            flex-wrap: wrap;
+            page-break-inside: auto;
+        }
+        .chart {
+            display:flex;
+            flex:1;
+            max-width: 50%;
+        }
+    </style>
+</head>
+<body style="font-family: IBM Plex Sans; font-weight: 200;">
+    <main>
+        <div class="left-column">
+            <img src="https://hyperledger.github.io/caliper/assets/img/hyperledger_caliper_logo_color.png" style="width:95%;" alt="">
+            <ul>
+                <h3>&nbspBasic information</h3>
+                <li>DLT: &nbsp<span style="font-weight: 500;">ethereum</span></li>
+                <li>Name: &nbsp<span style="font-weight: 500;">Write performance</span></li>
+                <li>Description: &nbsp<span style="font-weight: 500;">This is a benchmark for caliper, to test the system smart contract write performance</span></li>
+                <li>Benchmark Rounds: &nbsp<span style="font-weight: 500;">10</span></li>
+                <li><a href="#benchmarkInfo">Details</a></li>
+            </ul>
+            <ul>
+                <h3>&nbspBenchmark results</h3>
+                <li><a href="#benchmarksummary">Summary</a></li>
+                    <li><a href="#5TSP">5TSP</a></li>
+                    <li><a href="#10TSP">10TSP</a></li>
+                    <li><a href="#15TSP">15TSP</a></li>
+                    <li><a href="#20TSP">20TSP</a></li>
+                    <li><a href="#25TSP">25TSP</a></li>
+                    <li><a href="#30TSP">30TSP</a></li>
+                    <li><a href="#35TSP">35TSP</a></li>
+                    <li><a href="#40TSP">40TSP</a></li>
+                    <li><a href="#45TSP">45TSP</a></li>
+                    <li><a href="#50TSP">50TSP</a></li>
+            </ul>
+            <ul>
+                <h3>&nbspSystem under test</h3>
+                <li><a href="#sutdetails">Details</a></li>
+            </ul>
+        </div>
+
+        <div class="right-column">
+            <h1 style="padding-top: 3em; font-weight: 500;">Caliper report</h1>
+            <div style="border-bottom: 1px solid #d9d9d9; margin-bottom: 10px;" id="benchmarksummary">
+                <table style="min-width: 100%;">
+                    <h3>Summary of performance metrics</h3>
+                    <tr>
+                         <th>Name</th> <th>Succ</th> <th>Fail</th> <th>Send Rate (TPS)</th> <th>Max Latency (s)</th> <th>Min Latency (s)</th> <th>Avg Latency (s)</th> <th>Throughput (TPS)</th>
+                    </tr>
+
+                    <tr>
+                         <td>5TSP</td> <td>100</td> <td>0</td> <td>5.1</td> <td>1.71</td> <td>0.31</td> <td>1.05</td> <td>4.8</td>
+                    </tr>
+                    <tr>
+                         <td>10TSP</td> <td>100</td> <td>0</td> <td>10.1</td> <td>1.48</td> <td>0.26</td> <td>0.92</td> <td>9.5</td>
+                    </tr>
+                    <tr>
+                         <td>15TSP</td> <td>100</td> <td>0</td> <td>15.1</td> <td>1.70</td> <td>0.27</td> <td>0.95</td> <td>13.3</td>
+                    </tr>
+                    <tr>
+                         <td>20TSP</td> <td>100</td> <td>0</td> <td>20.2</td> <td>1.64</td> <td>0.26</td> <td>1.02</td> <td>17.7</td>
+                    </tr>
+                    <tr>
+                         <td>25TSP</td> <td>100</td> <td>0</td> <td>25.3</td> <td>1.77</td> <td>0.27</td> <td>1.04</td> <td>21.9</td>
+                    </tr>
+                    <tr>
+                         <td>30TSP</td> <td>100</td> <td>0</td> <td>30.3</td> <td>1.70</td> <td>0.27</td> <td>1.06</td> <td>22.1</td>
+                    </tr>
+                    <tr>
+                         <td>35TSP</td> <td>100</td> <td>0</td> <td>35.3</td> <td>1.98</td> <td>0.27</td> <td>1.35</td> <td>26.5</td>
+                    </tr>
+                    <tr>
+                         <td>40TSP</td> <td>100</td> <td>0</td> <td>40.4</td> <td>2.60</td> <td>0.26</td> <td>1.80</td> <td>22.8</td>
+                    </tr>
+                    <tr>
+                         <td>45TSP</td> <td>100</td> <td>0</td> <td>45.5</td> <td>2.05</td> <td>0.26</td> <td>1.33</td> <td>27.3</td>
+                    </tr>
+                    <tr>
+                         <td>50TSP</td> <td>100</td> <td>0</td> <td>50.5</td> <td>1.73</td> <td>0.27</td> <td>1.14</td> <td>27.8</td>
+                    </tr>
+                </table>
+            </div>
+            <div style="border-bottom: 1px solid #d9d9d9; padding-bottom: 10px;" id="5TSP">
+                <h2>Benchmark round: 5TSP</h2>
+                <p></p>
+                <pre style="overflow: visible;white-space: pre-wrap;max-height:100%;">rateControl:
+  type: fixed-rate
+  opts:
+    tps: 5
+</pre>
+                        <h3>Performance metrics for 5TSP</h3>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                     <th>Name</th> <th>Succ</th> <th>Fail</th> <th>Send Rate (TPS)</th> <th>Max Latency (s)</th> <th>Min Latency (s)</th> <th>Avg Latency (s)</th> <th>Throughput (TPS)</th>
+                                </tr>
+                                <tr>
+                                     <td>5TSP</td> <td>100</td> <td>0</td> <td>5.1</td> <td>1.71</td> <td>0.31</td> <td>1.05</td> <td>4.8</td>
+                                </tr>
+                            </table>
+                        <h3>Resource utilization for 5TSP</h3>
+            </div>
+
+            <div style="border-bottom: 1px solid #d9d9d9; padding-bottom: 10px;" id="10TSP">
+                <h2>Benchmark round: 10TSP</h2>
+                <p></p>
+                <pre style="overflow: visible;white-space: pre-wrap;max-height:100%;">rateControl:
+  type: fixed-rate
+  opts:
+    tps: 10
+</pre>
+                        <h3>Performance metrics for 10TSP</h3>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                     <th>Name</th> <th>Succ</th> <th>Fail</th> <th>Send Rate (TPS)</th> <th>Max Latency (s)</th> <th>Min Latency (s)</th> <th>Avg Latency (s)</th> <th>Throughput (TPS)</th>
+                                </tr>
+                                <tr>
+                                     <td>10TSP</td> <td>100</td> <td>0</td> <td>10.1</td> <td>1.48</td> <td>0.26</td> <td>0.92</td> <td>9.5</td>
+                                </tr>
+                            </table>
+                        <h3>Resource utilization for 10TSP</h3>
+            </div>
+
+            <div style="border-bottom: 1px solid #d9d9d9; padding-bottom: 10px;" id="15TSP">
+                <h2>Benchmark round: 15TSP</h2>
+                <p></p>
+                <pre style="overflow: visible;white-space: pre-wrap;max-height:100%;">rateControl:
+  type: fixed-rate
+  opts:
+    tps: 15
+</pre>
+                        <h3>Performance metrics for 15TSP</h3>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                     <th>Name</th> <th>Succ</th> <th>Fail</th> <th>Send Rate (TPS)</th> <th>Max Latency (s)</th> <th>Min Latency (s)</th> <th>Avg Latency (s)</th> <th>Throughput (TPS)</th>
+                                </tr>
+                                <tr>
+                                     <td>15TSP</td> <td>100</td> <td>0</td> <td>15.1</td> <td>1.70</td> <td>0.27</td> <td>0.95</td> <td>13.3</td>
+                                </tr>
+                            </table>
+                        <h3>Resource utilization for 15TSP</h3>
+            </div>
+
+            <div style="border-bottom: 1px solid #d9d9d9; padding-bottom: 10px;" id="20TSP">
+                <h2>Benchmark round: 20TSP</h2>
+                <p></p>
+                <pre style="overflow: visible;white-space: pre-wrap;max-height:100%;">rateControl:
+  type: fixed-rate
+  opts:
+    tps: 20
+</pre>
+                        <h3>Performance metrics for 20TSP</h3>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                     <th>Name</th> <th>Succ</th> <th>Fail</th> <th>Send Rate (TPS)</th> <th>Max Latency (s)</th> <th>Min Latency (s)</th> <th>Avg Latency (s)</th> <th>Throughput (TPS)</th>
+                                </tr>
+                                <tr>
+                                     <td>20TSP</td> <td>100</td> <td>0</td> <td>20.2</td> <td>1.64</td> <td>0.26</td> <td>1.02</td> <td>17.7</td>
+                                </tr>
+                            </table>
+                        <h3>Resource utilization for 20TSP</h3>
+            </div>
+
+            <div style="border-bottom: 1px solid #d9d9d9; padding-bottom: 10px;" id="25TSP">
+                <h2>Benchmark round: 25TSP</h2>
+                <p></p>
+                <pre style="overflow: visible;white-space: pre-wrap;max-height:100%;">rateControl:
+  type: fixed-rate
+  opts:
+    tps: 25
+</pre>
+                        <h3>Performance metrics for 25TSP</h3>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                     <th>Name</th> <th>Succ</th> <th>Fail</th> <th>Send Rate (TPS)</th> <th>Max Latency (s)</th> <th>Min Latency (s)</th> <th>Avg Latency (s)</th> <th>Throughput (TPS)</th>
+                                </tr>
+                                <tr>
+                                     <td>25TSP</td> <td>100</td> <td>0</td> <td>25.3</td> <td>1.77</td> <td>0.27</td> <td>1.04</td> <td>21.9</td>
+                                </tr>
+                            </table>
+                        <h3>Resource utilization for 25TSP</h3>
+            </div>
+
+            <div style="border-bottom: 1px solid #d9d9d9; padding-bottom: 10px;" id="30TSP">
+                <h2>Benchmark round: 30TSP</h2>
+                <p></p>
+                <pre style="overflow: visible;white-space: pre-wrap;max-height:100%;">rateControl:
+  type: fixed-rate
+  opts:
+    tps: 30
+</pre>
+                        <h3>Performance metrics for 30TSP</h3>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                     <th>Name</th> <th>Succ</th> <th>Fail</th> <th>Send Rate (TPS)</th> <th>Max Latency (s)</th> <th>Min Latency (s)</th> <th>Avg Latency (s)</th> <th>Throughput (TPS)</th>
+                                </tr>
+                                <tr>
+                                     <td>30TSP</td> <td>100</td> <td>0</td> <td>30.3</td> <td>1.70</td> <td>0.27</td> <td>1.06</td> <td>22.1</td>
+                                </tr>
+                            </table>
+                        <h3>Resource utilization for 30TSP</h3>
+            </div>
+
+            <div style="border-bottom: 1px solid #d9d9d9; padding-bottom: 10px;" id="35TSP">
+                <h2>Benchmark round: 35TSP</h2>
+                <p></p>
+                <pre style="overflow: visible;white-space: pre-wrap;max-height:100%;">rateControl:
+  type: fixed-rate
+  opts:
+    tps: 35
+</pre>
+                        <h3>Performance metrics for 35TSP</h3>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                     <th>Name</th> <th>Succ</th> <th>Fail</th> <th>Send Rate (TPS)</th> <th>Max Latency (s)</th> <th>Min Latency (s)</th> <th>Avg Latency (s)</th> <th>Throughput (TPS)</th>
+                                </tr>
+                                <tr>
+                                     <td>35TSP</td> <td>100</td> <td>0</td> <td>35.3</td> <td>1.98</td> <td>0.27</td> <td>1.35</td> <td>26.5</td>
+                                </tr>
+                            </table>
+                        <h3>Resource utilization for 35TSP</h3>
+            </div>
+
+            <div style="border-bottom: 1px solid #d9d9d9; padding-bottom: 10px;" id="40TSP">
+                <h2>Benchmark round: 40TSP</h2>
+                <p></p>
+                <pre style="overflow: visible;white-space: pre-wrap;max-height:100%;">rateControl:
+  type: fixed-rate
+  opts:
+    tps: 40
+</pre>
+                        <h3>Performance metrics for 40TSP</h3>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                     <th>Name</th> <th>Succ</th> <th>Fail</th> <th>Send Rate (TPS)</th> <th>Max Latency (s)</th> <th>Min Latency (s)</th> <th>Avg Latency (s)</th> <th>Throughput (TPS)</th>
+                                </tr>
+                                <tr>
+                                     <td>40TSP</td> <td>100</td> <td>0</td> <td>40.4</td> <td>2.60</td> <td>0.26</td> <td>1.80</td> <td>22.8</td>
+                                </tr>
+                            </table>
+                        <h3>Resource utilization for 40TSP</h3>
+            </div>
+
+            <div style="border-bottom: 1px solid #d9d9d9; padding-bottom: 10px;" id="45TSP">
+                <h2>Benchmark round: 45TSP</h2>
+                <p></p>
+                <pre style="overflow: visible;white-space: pre-wrap;max-height:100%;">rateControl:
+  type: fixed-rate
+  opts:
+    tps: 45
+</pre>
+                        <h3>Performance metrics for 45TSP</h3>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                     <th>Name</th> <th>Succ</th> <th>Fail</th> <th>Send Rate (TPS)</th> <th>Max Latency (s)</th> <th>Min Latency (s)</th> <th>Avg Latency (s)</th> <th>Throughput (TPS)</th>
+                                </tr>
+                                <tr>
+                                     <td>45TSP</td> <td>100</td> <td>0</td> <td>45.5</td> <td>2.05</td> <td>0.26</td> <td>1.33</td> <td>27.3</td>
+                                </tr>
+                            </table>
+                        <h3>Resource utilization for 45TSP</h3>
+            </div>
+
+            <div style="border-bottom: 1px solid #d9d9d9; padding-bottom: 10px;" id="50TSP">
+                <h2>Benchmark round: 50TSP</h2>
+                <p></p>
+                <pre style="overflow: visible;white-space: pre-wrap;max-height:100%;">rateControl:
+  type: fixed-rate
+  opts:
+    tps: 50
+</pre>
+                        <h3>Performance metrics for 50TSP</h3>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                     <th>Name</th> <th>Succ</th> <th>Fail</th> <th>Send Rate (TPS)</th> <th>Max Latency (s)</th> <th>Min Latency (s)</th> <th>Avg Latency (s)</th> <th>Throughput (TPS)</th>
+                                </tr>
+                                <tr>
+                                     <td>50TSP</td> <td>100</td> <td>0</td> <td>50.5</td> <td>1.73</td> <td>0.27</td> <td>1.14</td> <td>27.8</td>
+                                </tr>
+                            </table>
+                        <h3>Resource utilization for 50TSP</h3>
+            </div>
+
+            <div style="border-bottom: 1px solid #d9d9d9; padding-bottom: 10px;">
+                <h2>Test Environment</h2>
+                <h3>benchmark config</h3>
+                <pre id="benchmarkInfo" style="overflow: visible;white-space: pre-wrap;max-height:100%;">name: Write performance
+description: &gt;-
+  This is a benchmark for caliper, to test the system smart contract write
+  performance
+workers:
+  type: local
+  number: 1
+rounds:
+  - label: 5TSP
+    txNumber: 100
+    rateControl:
+      type: fixed-rate
+      opts:
+        tps: 5
+    callback: benchmarks&#x2F;callbacks&#x2F;Write.js
+  - label: 10TSP
+    txNumber: 100
+    rateControl:
+      type: fixed-rate
+      opts:
+        tps: 10
+    callback: benchmarks&#x2F;callbacks&#x2F;Write.js
+  - label: 15TSP
+    txNumber: 100
+    rateControl:
+      type: fixed-rate
+      opts:
+        tps: 15
+    callback: benchmarks&#x2F;callbacks&#x2F;Write.js
+  - label: 20TSP
+    txNumber: 100
+    rateControl:
+      type: fixed-rate
+      opts:
+        tps: 20
+    callback: benchmarks&#x2F;callbacks&#x2F;Write.js
+  - label: 25TSP
+    txNumber: 100
+    rateControl:
+      type: fixed-rate
+      opts:
+        tps: 25
+    callback: benchmarks&#x2F;callbacks&#x2F;Write.js
+  - label: 30TSP
+    txNumber: 100
+    rateControl:
+      type: fixed-rate
+      opts:
+        tps: 30
+    callback: benchmarks&#x2F;callbacks&#x2F;Write.js
+  - label: 35TSP
+    txNumber: 100
+    rateControl:
+      type: fixed-rate
+      opts:
+        tps: 35
+    callback: benchmarks&#x2F;callbacks&#x2F;Write.js
+  - label: 40TSP
+    txNumber: 100
+    rateControl:
+      type: fixed-rate
+      opts:
+        tps: 40
+    callback: benchmarks&#x2F;callbacks&#x2F;Write.js
+  - label: 45TSP
+    txNumber: 100
+    rateControl:
+      type: fixed-rate
+      opts:
+        tps: 45
+    callback: benchmarks&#x2F;callbacks&#x2F;Write.js
+  - label: 50TSP
+    txNumber: 100
+    rateControl:
+      type: fixed-rate
+      opts:
+        tps: 50
+    callback: benchmarks&#x2F;callbacks&#x2F;Write.js
+</pre>
+                <h3>SUT</h3>
+                <pre id="sutdetails">not provided</pre>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

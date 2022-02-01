@@ -1,0 +1,50 @@
+test:
+  name: Read performance
+  description: This is a benchmark for caliper, to test the system smart contract Read performance
+  workers:
+    type: local
+    number: 1
+  rounds:
+    - label: 5TSP
+      txNumber: 100
+      rateControl: { type: fixed-rate, opts: { tps: 50 } }
+      callback: benchmarks/callbacks/Read.js
+    - label: 10TSP
+      txNumber: 100
+      rateControl: { type: fixed-rate, opts: { tps: 100 } }
+      callback: benchmarks/callbacks/Read.js
+    - label: 15TSP
+      txNumber: 100
+      rateControl: { type: fixed-rate, opts: { tps: 150 } }
+      callback: benchmarks/callbacks/Read.js
+    - label: 20TSP
+      txNumber: 100
+      rateControl: { type: fixed-rate, opts: { tps: 200 } }
+      callback: benchmarks/callbacks/Read.js
+    - label: 25TSP
+      txNumber: 100
+      rateControl: { type: fixed-rate, opts: { tps: 250 } }
+      callback: benchmarks/callbacks/Read.js
+    - label: 30TSP
+      txNumber: 100
+      rateControl: { type: fixed-rate, opts: { tps: 300 } }
+      callback: benchmarks/callbacks/Read.js
+    - label: 35TSP
+      txNumber: 100
+      rateControl: { type: fixed-rate, opts: { tps: 350 } }
+      callback: benchmarks/callbacks/Read.js
+    - label: 40TSP
+      txNumber: 100
+      rateControl: { type: fixed-rate, opts: { tps: 400 } }
+      callback: benchmarks/callbacks/Read.js
+    - label: 45TSP
+      txNumber: 100
+      rateControl: { type: fixed-rate, opts: { tps: 450 } }
+      callback: benchmarks/callbacks/Read.js
+    - label: 50TSP
+      txNumber: 100
+      rateControl: { type: fixed-rate, opts: { tps: 500 } }
+      callback: benchmarks/callbacks/Read.js
+monitor:
+  type:
+    - none
